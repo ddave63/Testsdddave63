@@ -1,0 +1,92 @@
+<?php
+$musique = "Light%20Years.mp3";
+?>
+<style type="text/css">
+    .volume {
+    vertical-align: bottom;
+    display: inline-block;
+    height: 25px;
+    white-space: nowrap;
+    position: relative;
+    width: 45px;
+}
+
+.volume a {
+    display: inline-block;
+    background: #ebebeb;
+    width: 8px;
+    vertical-align: bottom;
+    margin-left: 0px;
+    margin-right: 0px;
+    cursor: pointer;
+    border-left: 1px solid #fff;
+    position: absolute;
+    bottom: 0;    
+}
+
+
+.stick1 { height: 5px;  left: 0px; }
+.stick2 { height: 10px; left: 9px; }
+.stick3 { height: 15px; left: 18px; }
+.stick4 { height: 20px; left: 27px; }
+.stick5 { height: 25px; left: 36px; }
+</style>
+<script type="text/javascript">
+    var player = document.querySelector('#audio');
+
+      
+      function play(idPlayer, control) {
+          var player = document.querySelector('#' + idPlayer);
+    
+          if (player.paused) {
+              player.play();
+              control.textContent = 'Pause';
+          } else {
+              player.pause();    
+              control.textContent = 'Play';
+          }
+      }
+
+      function resume(idPlayer) {
+          var player = document.querySelector('#' + idPlayer);
+    
+          player.currentTime = 0;
+          player.pause();
+      }
+      function volume(idPlayer, vol) {
+    var player = document.querySelector('#' + idPlayer);
+    
+    player.volume = vol;    
+    }
+    function update(player) {
+    var duration = player.duration;    // Durée totale
+    var time     = player.currentTime; // Temps écoulé
+    var fraction = time / duration;
+    var percent  = Math.ceil(fraction * 100);
+
+    var progress = document.querySelector('#progressBar');
+    
+    
+    progress.innerHTML = '<progress id="progressBar" value="' + percent + '" max="100" style="width:300px;"></progress>';
+
+}
+    
+</script>
+<audio id="audio" ontimeupdate="update(this)" >
+    <source src="<?php echo $musique; ?>" >
+</audio>
+<button class="control" onclick="play('audio', this)">Play</button>
+<button class="control" onclick="resume('audio')">Stop</button>
+<span class="volume">
+    <a class="stick1" onclick="volume('audio', 0)"></a>
+    <a class="stick2" onclick="volume('audio', 0.3)"></a>
+    <a class="stick3" onclick="volume('audio', 0.5)"></a>
+    <a class="stick4" onclick="volume('audio', 0.7)"></a>
+    <a class="stick5" onclick="volume('audio', 1)"></a>
+</span><br/>
+<div>
+    <div id="progressBarControl">
+        
+        <div id="progressBar" ></div>
+    </div>
+</div>
