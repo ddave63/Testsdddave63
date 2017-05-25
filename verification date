@@ -1,0 +1,4 @@
+<?php
+setlocale(LC_ALL, "fr_FR.UTF8");
+echo "Dernière modification effectuée le ".strftime("%A %e %B %Y à %H:%M", getlastmod());
+?>
