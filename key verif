@@ -1,0 +1,22 @@
+<?php
+$timestamp_key = md5(round(time()/10));
+if (!empty($_GET['key'])) 
+{
+    if ($_GET['key'] == $timestamp_key) 
+    {
+        $access = TRUE;
+    }
+    else
+    {
+        $access = FALSE;
+    }
+}
+if ($access == TRUE) 
+{
+    # code...
+}
+else
+{
+    echo "Error 400, Illegal Request";
+}
+?>
