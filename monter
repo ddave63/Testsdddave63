@@ -1,0 +1,94 @@
+function tel_international($prefix = '33', $tel_format_national)
+
+{
+
+
+    switch ($prefix) {
+
+        case 33:
+            $syntaxe = "/^0[0-9]{9}$/"; // France métropolitaine : +33 C CC CC CC CC ou 0C CC CC CC CC (format national)
+            break;
+
+        case 590:
+            $syntaxe = "/^0[0-9]{9}$/"; //   Guadeloupe : +590 CCC CC CC CC ou 0CCC CC CC CC(format national)
+            break;
+
+        case 596:
+            $syntaxe = "/^0[0-9]{9}$/"; // Martinique : +596 CCC CC CC CC ou 0CCC CC CC CC (format national)
+            break;
+
+        case 594:
+            $syntaxe = "/^0[0-9]{9}$/"; // Guyane : +594 CCC CC CC CC ou 0CCC CC CC CC (format national)
+            break;
+
+        case 262:
+            $syntaxe = "/^0[0-9]{9}$/"; // Réunion et Mayotte : +262 CCC CC CC CC ou 0CCC CC CC CC (format national)
+            break;
+
+
+        case 687:
+            $syntaxe = "/^[0-9]{6}$/"; // nouvelle caledonie
+            break;
+
+        case 689:
+            $syntaxe = "/^[0-9]{8}$/"; // Polynésie française
+            break;
+
+        case 32:
+            $syntaxe = "/[0-9]{8,10}/"; // BELGIQUE
+            /*
+             *
+             *  Belgique :
+Format national 9 chiffres : 0ZZ CC CC CC ou 0Z CCC CC CC
+Format international : +32 ZZ CC CC CC ou +32 Z CCC CC CC
+Le premier chiffre dans le format national est toujours le zéro.
+Il faut toujours composer l'indicatif de zone (Z ou ZZ). L'indicatif de zone fait le plus souvent 2 chiffres, excepté dans les grandes agglomérations où l'on est passé à 1 chiffre. (Bruxelles : 2, Anvers : 3, Liège : 4, Gand : 9). Les 070 et 078 ne sont pas utilisés pour des zones, mais pour des numéros spéciaux à bas prix (078 prix d'un appel local, 070 = 0,30 €/min), seul le 071 concerne bien une zone géographique.
+GSM (national) 10 chiffres : de 045C CC CC CC à 049C CC CC CC
+GSM (international) : de +32 45C CC CC CC à +32 49C CC CC CC
+À l'heure actuelle, il n'est plus possible de déterminer l'opérateur à l'aide du numéro de téléphone portable (les numéros peuvent être portés chez un autre opérateur). Auparavant, les numéros étaient rattachés aux différents opérateurs comme suit : 049C = Orange, 047C = Proximus, 048C = Base.
+Numéro gratuit : 0800/
+Numéro payant a minimum 1 euro/min : 090C/
+             *
+             * */
+            break;
+
+        default:
+
+            $syntaxe = "/^0[0-9]{9}$/"; // France métropolitaine : +33 C CC CC CC CC ou 0C CC CC CC CC (format national)
+            break;
+
+
+    }
+
+    if (preg_match($syntaxe, $tel_format_national)) {
+
+        if ($prefix == 687 OR $prefix == 689) {
+            $num_international = '+' . $prefix . $tel_format_national;
+        } elseif ($prefix == 32) {
+
+            $longeur = strlen($tel_format_national);
+
+            if ($longeur == 10) {
+                $tel_sans_zero = substr($tel_format_national, 1);
+                $num_international = '+' . $prefix . $tel_sans_zero;
+
+            } else {
+                $num_international = '+' . $prefix . $tel_format_national;
+            }
+
+
+        } else {
+            $tel_sans_zero = substr($tel_format_national, 1);
+            $num_international = '+' . $prefix . $tel_sans_zero;
+        }
+
+
+    } else {
+        $num_international = false;
+    }
+
+
+    return $num_international;
+
+
+}
