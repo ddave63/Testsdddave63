@@ -1,0 +1,28 @@
+// Programme à insérer entre les balises <head> et </head>
+
+<?php 
+    $site_type='pc'; // 'pc' ou 'mobile', permet d'indiquer si il s'agit de la version mobile ou pc de la page
+?>
+
+// Le programme en lui même, que vous pouvez mettre dans un autre fichier et l&#8217;appeler à l'aide d'un 'include'
+
+<?php
+$url_pc='http://votre-site.fr';          // URL du site classique
+$url_mobile='http://votre-site-mobile.fr';      // URL de la version mobile du site
+
+$url_before='Du texte avant';      // Texte avant le lien
+$url_text_pc='Afficher la version mobile';     // Texte du lien PC
+$url_text_mb='Afficher la version PC';     // Texte du lien mobile
+$url_after='Du texte après';       // Texte apres le lien
+
+$url_init=$_SERVER['PHP_SELF']; // Recupere le chemin de la page
+$reg='#^(.+[\\\/])*([^\\\/]+)$#';
+$url_end=preg_replace($reg, '$2', $url_init); // Permet de ne recuperer que le nom du fichier acutelle
+
+if ($site_type=='pc') {             // Version pc
+    $url=$url_before.' <a href="'.$url_mobile.$url_end.'">'.$url_text_pc.'</a> '.$url_after;
+}
+
+elseif ($site_type=='mobile') {     // Version mobile
+    $url=$url_before.' <a href="'.$url_pc.$url_end.'">'.$url_text_mb.'</a> '.$url_after;
+}   
