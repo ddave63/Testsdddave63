@@ -1,0 +1,6 @@
+sqe=new Query_Engine($db,[
+    "CONTENT"=>"CONTENT_ARTICLE",
+    "TITRE"=>"TITRE_ARTICLE",
+    "RESUME"=>"RESUME_ARTICLE"
+]);
+
