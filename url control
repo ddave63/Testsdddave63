@@ -1,0 +1,9 @@
+$url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$chaine = $url; 
+$delimiteur = ".be/"; 
+$tab = explode($delimiteur, $chaine); 
+$extension = $tab[count($tab)-1];
+if($extension)
+{
+echo '<meta http-equiv="refresh" content="0;URL=l'adresse de votre choix">';
+}
