@@ -1,0 +1,86 @@
+<?php
+class Gestionfichier{
+	private $_fichier=Null;
+	private $_filegestion=Null;
+	private $_nbreitem=Null;
+	public function methodes(){//retourne le nom et le nombre d'enregistrement
+		echo 'raz()=Remise à zéro du fichier, return True<br />';
+		echo 'ajoute()=ajoute un élément à la fin du fichier <br />';
+		echo 'enleve(num)=enleve un élément choisi <br />';
+		echo 'maj(num)=met à jour l\'élément choisi<br />';
+		echo 'affiche()=affiche tous les éléments<br />';
+		echo 'tab()=retourne les éléments du fichier sous forme de tableau<br />';
+		echo 'elements(num1, num2, ...)=retourne les éléments choisis sous forme de  tableau<br />';
+		echo 'nbre()=retourne le nombre d\'éléments du fichier<br />';
+	}
+	public function __construct($_fichier) {
+       	if(!file_exists($_fichier)){$fp=fopen($_fichier,"w+");fclose($fp);}
+		$this->_fichier=$_fichier;
+		$this->initvar();
+    }
+	private function initvar(){
+		$this->_filegestion=file($this->_fichier);
+		$this->_nbreitem=count($this->_filegestion);
+	}
+	public function elements(){
+		$numargs = func_num_args();
+		for($i=0;$i<$numargs;$i++){
+			$tabelements[]=$this->_filegestion[func_get_arg($i)];
+		}
+		return $tabelements;
+	}
+	public function maj($num,$value){
+		$texte=	Null;
+		foreach($this->_filegestion as $cle =>$contenu){
+			if($num==$cle)$contenu=$value."\n";
+			$texte.=$contenu;	
+		}
+		file_put_contents($this->_fichier,$texte);
+		$this->initvar();
+	}
+	public function ajoute($value){
+		$texte=implode('',$this->_filegestion);
+		$texte.=$value."\n";			
+		file_put_contents($this->_fichier,$texte);
+		$this->initvar();
+	}
+	public function enleve($num){
+		$texte=array();
+		foreach($this->_filegestion as $cle =>$value){
+			if($cle!=$num){
+				$texte[]=$value;
+			}
+		}
+		$texte=implode('',$texte);
+		file_put_contents($this->_fichier,$texte);
+		$this->initvar();
+	}
+	public function affiche(){
+		foreach($this->_filegestion as $cle =>$value){
+			$value=htmlspecialchars($value);
+			echo $cle.'-'.$value."<br />";
+		}
+	}
+	public function tab(){//retourne le fichier sous forme de tableau
+		return $this->_filegestion	;
+	}
+	public function raz(){//remet le fichier a zéro
+		file_put_contents($this->_fichier,'');
+		$this->initvar();
+		return true;	
+	}
+	public function nbre(){//retourne le nom et le nombre d'enregistrement
+		return $this->_nbreitem;
+	}
+}
+$fichier2=new Gestionfichier('test.txt');
+//$fichier2->methodes();
+//$fichier2->ajoute('element');
+//$fichier2->enleve(3);
+//$fichier2->maj(1,'nouveautexte');
+//$fichier2->affiche();
+//echo $fichier2->elements(2,4,6)[1];
+//echo $fichier2->nbre().' enregistrement(s)<br />';
+//$tabfichier=$fichier2->tab();
+//if($fichier2->raz())echo 'Fichier vide<br /> ';
+?>
