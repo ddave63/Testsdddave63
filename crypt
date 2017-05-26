@@ -1,0 +1,35 @@
+<style>
+td{
+	position:relative;
+	width:700px;
+	font-size:xx-large;
+	border-top:2px solid;
+	border-left:2px solid;
+	color:#FF0000;
+}hr{
+	width:200px;
+}
+</style>
+<table align="center"><tr><td align="center">
+<tr><td>
+<?php
+function translater($s, $b){
+$t="";
+If (strlen($s) <= 20000){
+	For($a=0;$a<strlen($s);$a++){
+		If ($b == False) {
+			$t= $t . Chr((((Ord(substr($s, $a, 1)) - 32) + 224 - ((($a+1) * strlen($s)) % 224)) % 224) + 32);
+		}Else{
+			$t= $t . Chr(((Ord(substr($s, $a, 1)) - 32 + ((($a+1) * strlen($s)) % 224)) % 224) + 32);
+		}
+	}
+}else{}
+return $t;
+}
+$msg="La cryptographie est la science qui utilise les mathématiques pour chiffrer et déchiffrer des données. La cryptographie vous permet de stocker des informations sensibles ou de les transmettre à travers des réseaux non sûrs de telle sorte qu&#8217;elles ne puissent être lues par personne à l&#8217;exception du destinataire convenu.";
+echo htmlentities($msg)."<hr />";
+echo htmlentities(translater($msg,True))."<hr />";
+echo htmlentities(translater(translater($msg,True),false))."<hr />";
+?>
+
+</td></tr></table>
