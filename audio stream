@@ -85,7 +85,7 @@ $musique = "Light%20Years.mp3";
     <a class="stick5" onclick="volume('audio', 1)"></a>
 </span><br/>
 <div>
-    <div id="progressBarControl">
+    <div id="progressBarControl"> 
         
         <div id="progressBar" ></div>
     </div>
